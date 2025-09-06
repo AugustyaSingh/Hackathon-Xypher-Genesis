@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPortal - Educational Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Background Animation (Global) -->
+    <div class="background-animation">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+    </div>
+
+    <!-- LOGIN SECTION -->
+    <div id="loginSection" class="section active">
+        <div class="login-container">
+            <div class="logo">🎓 EDUPORTAL 🎓</div>
+            
+            <div class="role-buttons">
+                <button class="role-btn active" onclick="switchRole('student')">
+                    👨🏻‍🎓 Student
+                </button>
+                <button class="role-btn" onclick="switchRole('teacher')">
+                    👩🏻‍🏫 Teacher
+                </button>
+            </div>
+            
+            <div class="role-status">
+                Selected Role: <span class="current-role" id="roleDisplay">STUDENT</span>
+            </div>
+            
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-link" onclick="alert('Forgot password feature coming soon!'); return false;">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn login-btn">Login</button>
+                <button type="button" class="btn cancel-btn" onclick="clearForm()">Clear</button>
+            </form>
+            
+            <div class="divider"><span>or</span></div>
+            
+            <div class="signup-link">
+                Don't have an account? <a href="#" onclick="alert('Signup feature coming soon!'); return false;">Sign up here</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- STUDENT DASHBOARD SECTION -->
+    <div id="studentSection" class="section">
+        <div class="student-dashboard">
+            <!-- Sidebar -->
+            <nav class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo-small">🎓 EDUPORTAL</div>
+                    <div class="user-info">
+                        <div class="user-name">Aarav Ahuja</div>
+                        <div class="user-id">ID: 25020519</div>
+                    </div>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li><a href="#" onclick="showStudentSection('dashboard')" class="nav-link active">📊 Dashboard</a></li>
+                    <li><a href="#" onclick="showStudentSection('upload')" class="nav-link">📤 Upload Assignment</a></li>
+                    <li><a href="#" onclick="showStudentSection('tracking')" class="nav-link">🔍 Submission Tracking</a></li>
+                    <li><a href="#" onclick="showStudentSection('graded')" class="nav-link">📝 Graded Papers</a></li>
+                    <li><a href="#" onclick="showStudentSection('history')" class="nav-link">📚 Assignment History</a></li>
+                    <li><a href="#" onclick="showStudentSection('feedback')" class="nav-link">💬 Feedback Forms</a></li>
+                    <li><a href="#" onclick="showStudentSection('grades')" class="nav-link">🎯 Grade Tracker</a></li>
+                    <li><a href="#" onclick="logout()" class="nav-link logout">🚪 Logout</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Dashboard Overview -->
+                <div id="student-dashboard" class="content-section active">
+                    <h1>Student Dashboard</h1>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">📚</div>
+                            <div class="stat-info">
+                                <div class="stat-number">12</div>
+                                <div class="stat-label">Total Assignments</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-info">
+                                <div class="stat-number">8</div>
+                                <div class="stat-label">Completed</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⏳</div>
+                            <div class="stat-info">
+                                <div class="stat-number">3</div>
+                                <div class="stat-label">Pending</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⚠️</div>
+                            <div class="stat-info">
+                                <div class="stat-number">1</div>
+                                <div class="stat-label">Overdue</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <h3>Recent Assignments</h3>
+                            <div class="assignment-list">
+                                <div class="assignment-item">
+                                    <div class="assignment-info">
+                                        <div class="assignment-title">Mathematics Assignment 6</div>
+                                        <div class="assignment-due">Due: Sept 15, 2025</div>
+                                    </div>
+                                    <div class="status pending">Pending</div>
+                                </div>
+                                <div class="assignment-item">
+                                    <div class="assignment-info">
+                                        <div class="assignment-title">Mathematics Assignment 5</div>
+                                        <div class="assignment-due">Submitted: Sept 1, 2025</div>
+                                    </div>
+                                    <div class="status graded">A- (87/100)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3>Grade Overview</h3>
+                            <div class="grade-summary">
+                                <div class="overall-grade">
+                                    <div class="grade-label">Overall GPA</div>
+                                    <div class="grade-value">3.7</div>
+                                </div>
+                                <div class="subject-grades">
+                                    <div class="subject-grade">
+                                        <span class="subject">Mathematics</span>
+                                        <span class="grade">A- (85.5)</span>
+                                    </div>
+                                    <div class="subject-grade">
+                                        <span class="subject">Physics</span>
+                                        <span class="grade">B+ (82.3)</span>
+                                    </div>
+                                    <div class="subject-grade">
+                                        <span class="subject">Chemistry</span>
+                                        <span class="grade">B (78.9)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Student Sections -->
+                <div id="student-upload" class="content-section">
+                    <h1>Upload Assignment</h1>
+                    <div class="card">
+                        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                            <div class="upload-icon">📁</div>
+                            <div class="upload-text">Click to upload or drag files here</div>
+                            <input type="file" id="fileInput" multiple style="display: none;">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="student-tracking" class="content-section">
+                    <h1>Submission Tracking</h1>
+                    <div class="card">
+                        <div class="tracking-list">
+                            <div class="tracking-item">
+                                <div class="tracking-info">
+                                    <div class="tracking-title">Mathematics Assignment 6</div>
+                                    <div class="tracking-status">Pending submission</div>
+                                </div>
+                                <div class="tracking-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="student-graded" class="content-section">
+                    <h1>Graded Papers</h1>
+                    <div class="card">
+                        <div class="graded-list">
+                            <div class="graded-item">
+                                <div class="graded-info">
+                                    <div class="graded-title">Mathematics Assignment 5</div>
+                                    <div class="graded-feedback">Excellent work on derivatives!</div>
+                                </div>
+                                <div class="graded-score">87/100</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="student-history" class="content-section">
+                    <h1>Assignment History</h1>
+                    <div class="card">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Assignment</th>
+                                    <th>Subject</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th>Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mathematics Assignment 5</td>
+                                    <td>Mathematics</td>
+                                    <td>Sept 1, 2025</td>
+                                    <td><div class="status graded">Graded</div></td>
+                                    <td>A- (87/100)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="student-feedback" class="content-section">
+                    <h1>Feedback Forms</h1>
+                    <div class="card">
+                        <form class="feedback-form">
+                            <div class="form-group">
+                                <label>Course Rating</label>
+                                <div class="rating-stars">
+                                    <span class="star" onclick="setRating(1)">⭐</span>
+                                    <span class="star" onclick="setRating(2)">⭐</span>
+                                    <span class="star" onclick="setRating(3)">⭐</span>
+                                    <span class="star" onclick="setRating(4)">⭐</span>
+                                    <span class="star" onclick="setRating(5)">⭐</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Comments</label>
+                                <textarea placeholder="Share your feedback..."></textarea>
+                            </div>
+                            <button type="submit" class="btn--primary">Submit Feedback</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="student-grades" class="content-section">
+                    <h1>Grade Tracker</h1>
+                    <div class="card">
+                        <div class="grade-chart-container" style="position: relative; height: 400px;">
+                            <canvas id="gradeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- TEACHER DASHBOARD SECTION -->
+    <div id="teacherSection" class="section">
+        <div class="teacher-dashboard">
+            <!-- Sidebar -->
+            <nav class="teacher-sidebar">
+                <div class="teacher-sidebar-header">
+                    <div class="teacher-logo">🎓 EDUTRACK</div>
+                    <div class="teacher-info">
+                        <div class="teacher-name">Dr. Sarah Rodriguez</div>
+                        <div class="teacher-dept">Mathematics Dept</div>
+                    </div>
+                </div>
+                
+                <ul class="teacher-nav-menu">
+                    <li><a href="#" onclick="showTeacherSection('dashboard')" class="teacher-nav-link active">📊 Dashboard</a></li>
+                    <li><a href="#" onclick="showTeacherSection('assignments')" class="teacher-nav-link">📚 Assignment Management</a></li>
+                    <li><a href="#" onclick="showTeacherSection('grading')" class="teacher-nav-link">✏️ Grading Interface</a></li>
+                    <li><a href="#" onclick="showTeacherSection('analytics')" class="teacher-nav-link">📈 Class Analytics</a></li>
+                    <li><a href="#" onclick="showTeacherSection('files')" class="teacher-nav-link">📁 File Management</a></li>
+                    <li><a href="#" onclick="showTeacherSection('students')" class="teacher-nav-link">👥 Student Management</a></li>
+                    <li><a href="#" onclick="showTeacherSection('settings')" class="teacher-nav-link">⚙️ Settings</a></li>
+                    <li><a href="#" onclick="logout()" class="teacher-nav-link logout">🚪 Logout</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="teacher-main-content">
+                <!-- Teacher Dashboard -->
+                <div id="teacher-dashboard" class="teacher-content-section active">
+                    <h1>Teacher Dashboard</h1>
+                    
+                    <div class="teacher-stats-grid">
+                        <div class="teacher-stat-card">
+                            <div class="teacher-stat-icon">👥</div>
+                            <div class="teacher-stat-info">
+                                <div class="teacher-stat-number">156</div>
+                                <div class="teacher-stat-label">Total Students</div>
+                            </div>
+                        </div>
+                        <div class="teacher-stat-card">
+                            <div class="teacher-stat-icon">📋</div>
+                            <div class="teacher-stat-info">
+                                <div class="teacher-stat-number">23</div>
+                                <div class="teacher-stat-label">Active Assignments</div>
+                            </div>
+                        </div>
+                        <div class="teacher-stat-card">
+                            <div class="teacher-stat-icon">⏳</div>
+                            <div class="teacher-stat-info">
+                                <div class="teacher-stat-number">47</div>
+                                <div class="teacher-stat-label">Pending Grades</div>
+                            </div>
+                        </div>
+                        <div class="teacher-stat-card">
+                            <div class="teacher-stat-icon">📊</div>
+                            <div class="teacher-stat-info">
+                                <div class="teacher-stat-number">85%</div>
+                                <div class="teacher-stat-label">Class Average</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="teacher-dashboard-grid">
+                        <div class="teacher-card">
+                            <h3>Recent Activity</h3>
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-info">
+                                        <div class="activity-title">Mathematics Assignment 6 created</div>
+                                        <div class="activity-time">2 hours ago</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-info">
+                                        <div class="activity-title">12 submissions received</div>
+                                        <div class="activity-time">4 hours ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="teacher-card">
+                            <h3>Quick Actions</h3>
+                            <div class="quick-actions">
+                                <button class="btn--primary" onclick="showTeacherSection('assignments')">Create Assignment</button>
+                                <button class="btn--secondary" onclick="showTeacherSection('grading')">Grade Papers</button>
+                                <button class="btn--outline" onclick="showTeacherSection('analytics')">View Analytics</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Teacher Sections -->
+                <div id="teacher-assignments" class="teacher-content-section">
+                    <h1>Assignment Management</h1>
+                    <div class="teacher-card">
+                        <div class="assignment-list">
+                            <div class="assignment-row">
+                                <div class="assignment-details">
+                                    <div class="assignment-title">Mathematics Assignment 6</div>
+                                    <div class="assignment-meta">Due: Sept 15, 2025 • Submissions: 12/34</div>
+                                </div>
+                                <div class="assignment-actions">
+                                    <button class="btn--sm btn--primary">Edit</button>
+                                    <button class="btn--sm btn--secondary">View</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="teacher-grading" class="teacher-content-section">
+                    <h1>Grading Interface</h1>
+                    <div class="teacher-card">
+                        <div class="grading-header">
+                            <div class="student-name">Grading: John Smith</div>
+                            <div class="assignment-name">Mathematics Assignment 6</div>
+                        </div>
+                        
+                        <div class="question-list">
+                            <div class="question-item">
+                                <div class="question-text">Find the derivative of f(x) = 3x² + 2x - 5</div>
+                                <div class="student-answer">f'(x) = 6x + 2</div>
+                                <div class="grading-controls">
+                                    <div class="score-input">
+                                        <label>Score:</label>
+                                        <input type="number" value="20" max="25"> / 25
+                                    </div>
+                                    <div class="feedback-input">
+                                        <label>Feedback:</label>
+                                        <textarea placeholder="Enter feedback...">Excellent work! Correct application of power rule.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="question-item">
+                                <div class="question-text">Find the derivative of g(x) = sin(x) + cos(x)</div>
+                                <div class="student-answer">g'(x) = cos(x) - sin(x)</div>
+                                <div class="grading-controls">
+                                    <div class="score-input">
+                                        <label>Score:</label>
+                                        <input type="number" value="18" max="25"> / 25
+                                    </div>
+                                    <div class="feedback-input">
+                                        <label>Feedback:</label>
+                                        <textarea placeholder="Enter feedback...">Good understanding of trigonometric derivatives.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grading-footer">
+                            <div class="total-score">Total: 38/50</div>
+                            <button class="btn--primary">Save & Next Student</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="teacher-analytics" class="teacher-content-section">
+                    <h1>Class Analytics</h1>
+                    <div class="teacher-card">
+                        <div class="analytics-chart-container" style="position: relative; height: 400px;">
+                            <canvas id="analyticsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="teacher-files" class="teacher-content-section">
+                    <h1>File Management</h1>
+                    <div class="teacher-card">
+                        <div class="file-list">
+                            <div class="file-item">
+                                <div class="file-icon">📄</div>
+                                <div class="file-info">
+                                    <div class="file-name">john_smith_assignment6.pdf</div>
+                                    <div class="file-size">2.3 MB</div>
+                                </div>
+                                <div class="file-actions">
+                                    <button class="btn--sm btn--primary">Download</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="teacher-students" class="teacher-content-section">
+                    <h1>Student Management</h1>
+                    <div class="teacher-card">
+                        <table class="student-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>ID</th>
+                                    <th>Email</th>
+                                    <th>Assignments</th>
+                                    <th>Average</th>
+                                    <th>Last Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>John Smith</td>
+                                    <td>2024001</td>
+                                    <td>john.smith@email.com</td>
+                                    <td>5/5</td>
+                                    <td>87.5%</td>
+                                    <td>2 hours ago</td>
+                                </tr>
+                                <tr>
+                                    <td>Emma Johnson</td>
+                                    <td>2024002</td>
+                                    <td>emma.johnson@email.com</td>
+                                    <td>5/5</td>
+                                    <td>94.5%</td>
+                                    <td>1 day ago</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="teacher-settings" class="teacher-content-section">
+                    <h1>Settings</h1>
+                    <div class="teacher-card">
+                        <form class="settings-form">
+                            <div class="form-group">
+                                <label>Email Notifications</label>
+                                <input type="checkbox" checked> Receive submission notifications
+                            </div>
+                            <div class="form-group">
+                                <label>Auto-grading</label>
+                                <input type="checkbox"> Enable automatic grading for multiple choice
+                            </div>
+                            <div class="form-group">
+                                <label>Default Assignment Points</label>
+                                <input type="number" value="100" class="form-control">
+                            </div>
+                            <button type="submit" class="btn--primary">Save Settings</button>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
